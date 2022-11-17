@@ -1,4 +1,13 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext {
+        lifecycle_version = "2.5.1"
+        nav_version = "2.5.3"
+        retrofit_version = "2.9.0"
+        room_version = "2.4.3"
+    }
+}
+
 plugins {
     id 'com.android.application' version '7.3.1' apply false
     id 'com.android.library' version '7.3.1' apply false
