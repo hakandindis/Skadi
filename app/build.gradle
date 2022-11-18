@@ -21,8 +21,13 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            debuggable true
+
         }
     }
     productFlavors {
@@ -76,5 +81,11 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
+
+    // viewpager2
+    implementation "androidx.viewpager2:viewpager2:$view_pager_2_version"
+
+    // paging3
+    implementation "androidx.paging:paging-runtime:$paging_version"
 
 }

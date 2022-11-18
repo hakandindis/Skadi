@@ -5,6 +5,8 @@ buildscript {
         nav_version = "2.5.3"
         retrofit_version = "2.9.0"
         room_version = "2.4.3"
+        view_pager_2_version = "1.0.0"
+        paging_version = "3.1.1"
     }
 }
 
