@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.yagmurerdogan.toasticlib.Toastic
 import hakandindis.skadi.common.ProductApiUtils
 import hakandindis.skadi.data.model.ProductModel
@@ -32,13 +33,17 @@ class ProductListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
+
+        productsAdapter.onProductClick = {
+            val action = ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(it)
+            findNavController().navigate(action)
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
     }
-
 
     private fun initViews() {
 

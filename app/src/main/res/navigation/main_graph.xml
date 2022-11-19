@@ -18,5 +18,9 @@
         android:id="@+id/productDetailFragment"
         android:name="hakandindis.skadi.ui.product_detail.ProductDetailFragment"
         android:label="fragment_product_detail"
-        tools:layout="@layout/fragment_product_detail" />
+        tools:layout="@layout/fragment_product_detail" >
+        <argument
+            android:name="product"
+            app:argType="hakandindis.skadi.data.model.Product" />
+    </fragment>
 </navigation>

@@ -10,21 +10,28 @@ import hakandindis.skadi.data.model.Product
 import hakandindis.skadi.databinding.ProductListItemBinding
 
 class ProductsAdapter : ListAdapter<Product, ProductViewHolder>(ProductDiffUtilCallback) {
+
+    var onProductClick: (Product) -> Unit = {}
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val binding = ProductListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ProductViewHolder(binding)
+        return ProductViewHolder(binding, onProductClick)
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) = holder.bind(currentList[position])
 }
 
-class ProductViewHolder(private val binding: ProductListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+class ProductViewHolder(private val binding: ProductListItemBinding, private val onProductClick: (Product) -> Unit) :
+    RecyclerView.ViewHolder(binding.root) {
+
+
     fun bind(product: Product) {
         with(binding) {
-            nameText.text = product.title
-            detailText.text = product.description
+            titleText.text = product.title
             priceText.text = product.price.toString()
             Glide.with(productImage).load(product.thumbnail).into(productImage)
+
+            root.setOnClickListener { onProductClick(product) }
         }
     }
 }
