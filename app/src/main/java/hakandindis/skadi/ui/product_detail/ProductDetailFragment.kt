@@ -1,4 +1,4 @@
-package hakandindis.skadi.ui
+package hakandindis.skadi.ui.product_detail
 
 import android.os.Bundle
 import android.view.LayoutInflater

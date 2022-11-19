@@ -7,6 +7,8 @@ buildscript {
         room_version = "2.4.3"
         view_pager_2_version = "1.0.0"
         paging_version = "3.1.1"
+        glide_version = "4.14.2"
+        toastic_version = "1.0.1"
     }
 }
 

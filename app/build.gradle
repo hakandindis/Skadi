@@ -24,20 +24,21 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-
-        debug {
-            debuggable true
-
-        }
     }
+
+    flavorDimensions "version"
     productFlavors {
         staging {
-            buildConfigField "String", "baseUrl", "xx"
+            dimension "version"
+            applicationIdSuffix ".staging"
+            versionNameSuffix "-staging"
             manifestPlaceholders = ["appLabel": "testAppName"]
         }
 
         production {
-            buildConfigField "String", "baseUrl", "yy"
+            dimension "version"
+            applicationIdSuffix ".production"
+            versionNameSuffix "-production"
             manifestPlaceholders = ["appLabel": "testAppName"]
         }
     }
@@ -88,4 +89,9 @@ dependencies {
     // paging3
     implementation "androidx.paging:paging-runtime:$paging_version"
 
+    // glide
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+
+    // toastic
+    implementation "com.github.yagmurerdogan:Toastic:$toastic_version"
 }

@@ -2,6 +2,14 @@ package hakandindis.skadi.data.model
 
 import com.google.gson.annotations.SerializedName
 
+
+data class ProductModel (
+    @SerializedName("products" ) var products : ArrayList<Product> = arrayListOf(),
+    @SerializedName("total"    ) var total    : Int?                = null,
+    @SerializedName("skip"     ) var skip     : Int?                = null,
+    @SerializedName("limit"    ) var limit    : Int?                = null
+)
+
 data class Product (
     @SerializedName("id"                 ) var id                 : Int?              = null,
     @SerializedName("title"              ) var title              : String?           = null,
