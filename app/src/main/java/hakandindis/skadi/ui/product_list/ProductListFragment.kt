@@ -1,10 +1,10 @@
 package hakandindis.skadi.ui.product_list
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.yagmurerdogan.toasticlib.Toastic
@@ -56,15 +56,56 @@ class ProductListFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<ProductModel?>, t: Throwable) {
-                Log.d("HAKAN07", "ONFAILURE" + t.message.toString())
                 Toastic.toastic(
                     context = context!!,
                     message = "No products",
                     duration = Toastic.LENGTH_LONG,
                     type = Toastic.INFO,
                     isIconAnimated = true
-                )
+                ).show()
             }
+        })
+
+        binding?.searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let {
+                    productService.searchProducts(it).enqueue(object : Callback<ProductModel?> {
+                        override fun onResponse(call: Call<ProductModel?>, response: Response<ProductModel?>) {
+                            response.body()?.let { model ->
+                                if (model.products.isNotEmpty()) {
+                                    productsAdapter.submitList(model.products)
+                                } else {
+                                    Toastic.toastic(
+                                        context = requireContext(),
+                                        message = "No products",
+                                        duration = Toastic.LENGTH_LONG,
+                                        type = Toastic.INFO,
+                                        isIconAnimated = true
+                                    ).show()
+                                }
+                            }
+                        }
+
+                        override fun onFailure(call: Call<ProductModel?>, t: Throwable) {
+                            Toastic.toastic(
+                                context = requireContext(),
+                                message = "No products",
+                                duration = Toastic.LENGTH_LONG,
+                                type = Toastic.INFO,
+                                isIconAnimated = true
+                            ).show()
+                        }
+                    })
+                }
+
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+
+                return false
+            }
+
         })
     }
 }
