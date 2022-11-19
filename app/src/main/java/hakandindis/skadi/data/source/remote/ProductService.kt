@@ -1,6 +1,8 @@
 package hakandindis.skadi.data.source.remote
 
+import hakandindis.skadi.common.ProductApiConstants.GET_CATEGORIES
 import hakandindis.skadi.common.ProductApiConstants.GET_PRODUCTS
+import hakandindis.skadi.common.ProductApiConstants.GET_PRODUCTS_BY_CATEGORY
 import hakandindis.skadi.common.ProductApiConstants.GET_SINGLE_PRODUCT
 import hakandindis.skadi.common.ProductApiConstants.SEARCH_PRODUCTS
 import hakandindis.skadi.data.model.Product
@@ -19,6 +21,11 @@ interface ProductService {
     fun getSingleProduct(@Path("id") id: Int): Call<Product?>
 
     @GET(SEARCH_PRODUCTS)
-    fun searchProducts(@Query("q") query:String): Call<ProductModel?>
+    fun searchProducts(@Query("q") query: String): Call<ProductModel?>
 
+    @GET(GET_CATEGORIES)
+    fun getCategories(): Call<List<String>?>
+
+    @GET(GET_PRODUCTS_BY_CATEGORY)
+    fun getProductsByCategory(@Path("category") category: String): Call<ProductModel?>
 }

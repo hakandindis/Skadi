@@ -7,21 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import hakandindis.skadi.R
+import hakandindis.skadi.common.viewBinding
 import hakandindis.skadi.databinding.FragmentProductDetailBinding
 
-class ProductDetailFragment : Fragment() {
+class ProductDetailFragment : Fragment(R.layout.fragment_product_detail) {
 
-    private lateinit var binding: FragmentProductDetailBinding
+    private val binding by viewBinding(FragmentProductDetailBinding::bind)
     private val args: ProductDetailFragmentArgs by navArgs()
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        // Inflate the layout for this fragment
-        binding = FragmentProductDetailBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,7 +28,5 @@ class ProductDetailFragment : Fragment() {
                     .into(productImage)
             }
         }
-
-
     }
 }

@@ -9,6 +9,7 @@ buildscript {
         paging_version = "3.1.1"
         glide_version = "4.14.2"
         toastic_version = "1.0.1"
+        activity_version = "1.6.1"
     }
 }
 

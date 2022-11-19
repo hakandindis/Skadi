@@ -24,7 +24,6 @@ class ProductsAdapter : ListAdapter<Product, ProductViewHolder>(ProductDiffUtilC
 class ProductViewHolder(private val binding: ProductListItemBinding, private val onProductClick: (Product) -> Unit) :
     RecyclerView.ViewHolder(binding.root) {
 
-
     fun bind(product: Product) {
         with(binding) {
             titleText.text = product.title

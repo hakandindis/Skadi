@@ -1,111 +1,78 @@
 package hakandindis.skadi.ui.product_list
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.yagmurerdogan.toasticlib.Toastic
-import hakandindis.skadi.common.ProductApiUtils
-import hakandindis.skadi.data.model.ProductModel
+import hakandindis.skadi.R
+import hakandindis.skadi.common.viewBinding
 import hakandindis.skadi.databinding.FragmentProductListBinding
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-class ProductListFragment : Fragment() {
+class ProductListFragment : Fragment(R.layout.fragment_product_list) {
 
-    private var binding: FragmentProductListBinding? = null
+    private val binding by viewBinding(FragmentProductListBinding::bind)
+    private val viewModel: ProductListViewModel by viewModels()
     private val productsAdapter by lazy { ProductsAdapter() }
-    private val productService = ProductApiUtils.productService
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        binding = FragmentProductListBinding.inflate(inflater, container, false)
-        return binding?.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        initObservers()
         initViews()
-
-        productsAdapter.onProductClick = {
-            val action = ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(it)
-            findNavController().navigate(action)
-        }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
-    }
-
-    private fun initViews() {
-
-        productService.getProducts().enqueue(object : Callback<ProductModel?> {
-            override fun onResponse(call: Call<ProductModel?>, response: Response<ProductModel?>) {
-                response.body().let {
-                    productsAdapter.submitList(it?.products)
-                    binding?.productsList?.adapter = productsAdapter
-                }
-            }
-
-            override fun onFailure(call: Call<ProductModel?>, t: Throwable) {
+    private fun initObservers() {
+        viewModel.productList.observe(viewLifecycleOwner) {
+            if (it != null) {
+                productsAdapter.submitList(it)
+            } else {
                 Toastic.toastic(
-                    context = context!!,
+                    context = requireContext(),
                     message = "No products",
                     duration = Toastic.LENGTH_LONG,
                     type = Toastic.INFO,
                     isIconAnimated = true
                 ).show()
             }
-        })
+        }
+    }
 
-        binding?.searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+    private fun initViews() {
+        binding.productsList.adapter = productsAdapter
+
+        productsAdapter.onProductClick = {
+            val action = ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(it)
+            findNavController().navigate(action)
+        }
+
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {
-                    productService.searchProducts(it).enqueue(object : Callback<ProductModel?> {
-                        override fun onResponse(call: Call<ProductModel?>, response: Response<ProductModel?>) {
-                            response.body()?.let { model ->
-                                if (model.products.isNotEmpty()) {
-                                    productsAdapter.submitList(model.products)
-                                } else {
-                                    Toastic.toastic(
-                                        context = requireContext(),
-                                        message = "No products",
-                                        duration = Toastic.LENGTH_LONG,
-                                        type = Toastic.INFO,
-                                        isIconAnimated = true
-                                    ).show()
-                                }
-                            }
-                        }
-
-                        override fun onFailure(call: Call<ProductModel?>, t: Throwable) {
-                            Toastic.toastic(
-                                context = requireContext(),
-                                message = "No products",
-                                duration = Toastic.LENGTH_LONG,
-                                type = Toastic.INFO,
-                                isIconAnimated = true
-                            ).show()
-                        }
-                    })
+                    viewModel.searchProducts(query)
+                }.run {
+                    Toastic.toastic(
+                        context = requireContext(),
+                        message = "Bu isimle eşleşen ürün yok",
+                        duration = Toastic.LENGTH_LONG,
+                        type = Toastic.INFO,
+                        isIconAnimated = true
+                    ).show()
                 }
 
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-
+                newText?.let {
+                    if (newText.isEmpty()) {
+                        viewModel.getProducts()
+                    }
+                }
                 return false
             }
-
         })
     }
 }
