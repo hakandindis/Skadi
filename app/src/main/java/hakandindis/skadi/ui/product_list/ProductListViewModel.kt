@@ -27,4 +27,9 @@ class ProductListViewModel : ViewModel() {
         productRepository.searchProducts(query)
         _productList = productRepository.productList
     }
+
+    fun getProductsByCategory(category: String) {
+        productRepository.getProductsByCategory(category)
+        _productList = productRepository.productList
+    }
 }

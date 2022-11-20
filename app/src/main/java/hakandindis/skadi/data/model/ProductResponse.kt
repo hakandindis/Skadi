@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 
-data class ProductModel(
+data class ProductResponse(
     @SerializedName("products") var products: ArrayList<Product> = arrayListOf(),
     @SerializedName("total") var total: Int? = null,
     @SerializedName("skip") var skip: Int? = null,

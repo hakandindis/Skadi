@@ -33,14 +33,14 @@ android {
             dimension "version"
             applicationIdSuffix ".staging"
             versionNameSuffix "-staging"
-            manifestPlaceholders = ["appLabel": "testAppName"]
+            manifestPlaceholders = ["appLabel": "Skadi-Test"]
         }
 
         production {
             dimension "version"
             applicationIdSuffix ".production"
             versionNameSuffix "-production"
-            manifestPlaceholders = ["appLabel": "testAppName"]
+            manifestPlaceholders = ["appLabel": "Skadi-Release"]
         }
     }
     compileOptions {
@@ -64,6 +64,9 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+
+    // coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
     // lifecycle dependencies
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
