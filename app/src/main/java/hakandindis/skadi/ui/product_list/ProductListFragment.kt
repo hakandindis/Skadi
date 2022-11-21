@@ -26,17 +26,7 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list) {
 
     private fun initObservers() {
         viewModel.productList.observe(viewLifecycleOwner) {
-            if (it != null) {
-                productsAdapter.submitList(it)
-            } else {
-                Toastic.toastic(
-                    context = requireContext(),
-                    message = "No products",
-                    duration = Toastic.LENGTH_LONG,
-                    type = Toastic.INFO,
-                    isIconAnimated = true
-                ).show()
-            }
+            it?.let { productsAdapter.submitList(it) }
         }
     }
 
@@ -61,7 +51,6 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list) {
                         isIconAnimated = true
                     ).show()
                 }
-
                 return false
             }
 

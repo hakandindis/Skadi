@@ -60,7 +60,6 @@ class ProductRepository {
             override fun onFailure(call: Call<ProductResponse?>, t: Throwable) {
                 Log.d("Failure", t.message.toString())
             }
-
         })
     }
 
