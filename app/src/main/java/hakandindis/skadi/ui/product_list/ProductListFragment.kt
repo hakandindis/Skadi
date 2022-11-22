@@ -26,7 +26,17 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list) {
 
     private fun initObservers() {
         viewModel.productList.observe(viewLifecycleOwner) {
-            it?.let { productsAdapter.submitList(it) }
+            if (it != null) {
+                productsAdapter.submitList(it)
+            } else {
+                Toastic.toastic(
+                    context = requireContext(),
+                    message = "Ürün yok",
+                    duration = Toastic.LENGTH_LONG,
+                    type = Toastic.INFO,
+                    isIconAnimated = true
+                ).show()
+            }
         }
     }
 
@@ -42,14 +52,6 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list) {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {
                     viewModel.searchProducts(query)
-                }.run {
-                    Toastic.toastic(
-                        context = requireContext(),
-                        message = "Bu isimle eşleşen ürün yok",
-                        duration = Toastic.LENGTH_LONG,
-                        type = Toastic.INFO,
-                        isIconAnimated = true
-                    ).show()
                 }
                 return false
             }
