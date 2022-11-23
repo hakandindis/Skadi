@@ -27,15 +27,17 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list) {
     private fun initObservers() {
         viewModel.productList.observe(viewLifecycleOwner) {
             if (it != null) {
-                productsAdapter.submitList(it)
-            } else {
-                Toastic.toastic(
-                    context = requireContext(),
-                    message = "Ürün yok",
-                    duration = Toastic.LENGTH_LONG,
-                    type = Toastic.INFO,
-                    isIconAnimated = true
-                ).show()
+                if (it.isNotEmpty()) {
+                    productsAdapter.submitList(it)
+                } else {
+                    Toastic.toastic(
+                        context = requireContext(),
+                        message = "Ürün yok",
+                        duration = Toastic.LENGTH_LONG,
+                        type = Toastic.INFO,
+                        isIconAnimated = true
+                    ).show()
+                }
             }
         }
     }
