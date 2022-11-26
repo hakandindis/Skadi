@@ -1,6 +1,7 @@
 package hakandindis.skadi.ui.product_list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -8,14 +9,19 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.yagmurerdogan.toasticlib.Toastic
 import hakandindis.skadi.R
+import hakandindis.skadi.SkadiApplication
 import hakandindis.skadi.common.viewBinding
+import hakandindis.skadi.data.model.Product
 import hakandindis.skadi.databinding.FragmentProductListBinding
 
 class ProductListFragment : Fragment(R.layout.fragment_product_list) {
 
     private val binding by viewBinding(FragmentProductListBinding::bind)
-    private val viewModel: ProductListViewModel by viewModels()
     private val productsAdapter by lazy { ProductsAdapter() }
+    private val viewModel: ProductListViewModel by viewModels {
+        ProductListViewModelFactory((activity?.application as SkadiApplication).repository)
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,6 +35,7 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list) {
             if (it != null) {
                 if (it.isNotEmpty()) {
                     productsAdapter.submitList(it)
+                    viewModel.insert(it[1])
                 } else {
                     Toastic.toastic(
                         context = requireContext(),
@@ -40,12 +47,19 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list) {
                 }
             }
         }
+
+        viewModel.allWords.observe(viewLifecycleOwner) { list ->
+            list.forEach {
+                Log.d("HAKAN", it.toString())
+            }
+        }
     }
 
     private fun initViews() {
         binding.productsList.adapter = productsAdapter
 
         productsAdapter.onProductClick = {
+            viewModel.insert(it)
             val action = ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(it)
             findNavController().navigate(action)
         }

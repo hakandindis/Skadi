@@ -1,17 +1,17 @@
 package hakandindis.skadi.ui.product_list
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import hakandindis.skadi.data.ProductRepository
 import hakandindis.skadi.data.model.Product
 import kotlinx.coroutines.launch
 
-class ProductListViewModel : ViewModel() {
+class ProductListViewModel(private val productRepository: ProductRepository) : ViewModel() {
 
-    private val productRepository = ProductRepository()
+
+    private var _allWords = MutableLiveData<List<Product>>()
+    val allWords: LiveData<List<Product>>
+        get() = _allWords
 
     private var _productList = MutableLiveData<List<Product>?>()
     val productList: LiveData<List<Product>?>
@@ -19,7 +19,10 @@ class ProductListViewModel : ViewModel() {
 
     init {
         getProducts()
+        _allWords = productRepository.getLocaleProducts().asLiveData() as MutableLiveData<List<Product>>
     }
+
+    fun insert(product: Product) = viewModelScope.launch { productRepository.insert(product) }
 
     fun getProducts() = viewModelScope.launch {
         try {
@@ -43,5 +46,15 @@ class ProductListViewModel : ViewModel() {
         } catch (e: Exception) {
             Log.d("Failure", "Empty list")
         }
+    }
+}
+
+class ProductListViewModelFactory(private val repository: ProductRepository) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(ProductListViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return ProductListViewModel(repository) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
