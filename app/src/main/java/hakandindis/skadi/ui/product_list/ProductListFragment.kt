@@ -50,7 +50,7 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list) {
 
         viewModel.allWords.observe(viewLifecycleOwner) { list ->
             list.forEach {
-                Log.d("HAKAN", it.toString())
+                Log.d("HAKANNN", it.toString())
             }
         }
     }

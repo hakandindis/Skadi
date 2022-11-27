@@ -20,7 +20,7 @@ data class ProductResponse(
 @Parcelize
 @Entity(tableName = "products")
 data class Product(
-    @PrimaryKey var id: Int? = null,
+    @PrimaryKey(autoGenerate = true) var id: Int? = null,
     @ColumnInfo(name = "title") var title: String? = null,
     @ColumnInfo(name = "description") var description: String? = null,
     @ColumnInfo(name = "price") var price: Int? = null,
