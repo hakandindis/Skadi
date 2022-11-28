@@ -2,11 +2,15 @@ package hakandindis.skadi.ui.product_list
 
 import android.util.Log
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import hakandindis.skadi.data.ProductRepository
 import hakandindis.skadi.data.model.Product
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ProductListViewModel(private val productRepository: ProductRepository) : ViewModel() {
+
+@HiltViewModel
+class ProductListViewModel @Inject constructor(private val productRepository: ProductRepository) : ViewModel() {
 
 
     private var _allWords = MutableLiveData<List<Product>>()
@@ -19,10 +23,10 @@ class ProductListViewModel(private val productRepository: ProductRepository) : V
 
     init {
         getProducts()
-        _allWords = productRepository.getLocaleProducts().asLiveData() as MutableLiveData<List<Product>>
+//        _allWords = productRepository.getLocaleProducts().asLiveData() as MutableLiveData<List<Product>>
     }
 
-    fun insert(product: Product) = viewModelScope.launch { productRepository.insert(product) }
+//    fun insert(product: Product) = viewModelScope.launch { productRepository.insert(product) }
 
     fun getProducts() = viewModelScope.launch {
         try {

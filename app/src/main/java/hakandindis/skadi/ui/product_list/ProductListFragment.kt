@@ -8,19 +8,20 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.yagmurerdogan.toasticlib.Toastic
+import dagger.hilt.android.AndroidEntryPoint
 import hakandindis.skadi.R
-import hakandindis.skadi.SkadiApplication
 import hakandindis.skadi.common.viewBinding
-import hakandindis.skadi.data.model.Product
 import hakandindis.skadi.databinding.FragmentProductListBinding
 
+@AndroidEntryPoint
 class ProductListFragment : Fragment(R.layout.fragment_product_list) {
 
     private val binding by viewBinding(FragmentProductListBinding::bind)
     private val productsAdapter by lazy { ProductsAdapter() }
-    private val viewModel: ProductListViewModel by viewModels {
-        ProductListViewModelFactory((activity?.application as SkadiApplication).repository)
-    }
+//    private val viewModel: ProductListViewModel by viewModels {
+////        ProductListViewModelFactory((activity?.application as SkadiApplication).repository)
+//    }
+    private val viewModel: ProductListViewModel by viewModels()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,7 +36,7 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list) {
             if (it != null) {
                 if (it.isNotEmpty()) {
                     productsAdapter.submitList(it)
-                    viewModel.insert(it[1])
+//                    viewModel.insert(it[1])
                 } else {
                     Toastic.toastic(
                         context = requireContext(),
@@ -59,7 +60,7 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list) {
         binding.productsList.adapter = productsAdapter
 
         productsAdapter.onProductClick = {
-            viewModel.insert(it)
+//            viewModel.insert(it)
             val action = ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(it)
             findNavController().navigate(action)
         }

@@ -85,7 +85,7 @@ dependencies {
 
     // retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation 'com.google.code.gson:gson:2.9.1'
+    implementation 'com.google.code.gson:gson:2.10'
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
     // room
