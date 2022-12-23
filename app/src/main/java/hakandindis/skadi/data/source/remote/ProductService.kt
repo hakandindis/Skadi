@@ -1,10 +1,10 @@
 package hakandindis.skadi.data.source.remote
 
-import hakandindis.skadi.common.ProductApiConstants.GET_CATEGORIES
-import hakandindis.skadi.common.ProductApiConstants.GET_PRODUCTS
-import hakandindis.skadi.common.ProductApiConstants.GET_PRODUCTS_BY_CATEGORY
-import hakandindis.skadi.common.ProductApiConstants.GET_SINGLE_PRODUCT
-import hakandindis.skadi.common.ProductApiConstants.SEARCH_PRODUCTS
+import hakandindis.skadi.data.source.common.ProductApiConstants.GET_CATEGORIES
+import hakandindis.skadi.data.source.common.ProductApiConstants.GET_PRODUCTS
+import hakandindis.skadi.data.source.common.ProductApiConstants.GET_PRODUCTS_BY_CATEGORY
+import hakandindis.skadi.data.source.common.ProductApiConstants.GET_SINGLE_PRODUCT
+import hakandindis.skadi.data.source.common.ProductApiConstants.SEARCH_PRODUCTS
 import hakandindis.skadi.data.model.Product
 import hakandindis.skadi.data.model.ProductResponse
 import retrofit2.http.GET

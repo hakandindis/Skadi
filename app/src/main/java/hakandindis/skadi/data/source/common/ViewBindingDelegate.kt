@@ -1,4 +1,4 @@
-package hakandindis.skadi.common
+package hakandindis.skadi.data.source.common
 
 import android.view.LayoutInflater
 import android.view.View

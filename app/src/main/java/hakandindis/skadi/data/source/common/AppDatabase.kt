@@ -1,11 +1,11 @@
-package hakandindis.skadi.common
+package hakandindis.skadi.data.source.common
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import hakandindis.skadi.common.ApplicationConstants.DATABASE_NAME
+import hakandindis.skadi.data.source.common.ApplicationConstants.DATABASE_NAME
 import hakandindis.skadi.data.model.Product
 import hakandindis.skadi.data.source.locale.ProductDao
 import kotlinx.coroutines.CoroutineScope

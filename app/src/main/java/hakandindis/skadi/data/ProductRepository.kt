@@ -1,7 +1,7 @@
 package hakandindis.skadi.data
 
 import androidx.annotation.WorkerThread
-import hakandindis.skadi.common.ProductApiUtils
+import hakandindis.skadi.data.source.common.ProductApiUtils
 import hakandindis.skadi.data.model.Product
 import hakandindis.skadi.data.source.locale.ProductDao
 import hakandindis.skadi.data.source.remote.ProductService

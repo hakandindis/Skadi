@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.yagmurerdogan.toasticlib.Toastic
 import dagger.hilt.android.AndroidEntryPoint
 import hakandindis.skadi.R
-import hakandindis.skadi.common.viewBinding
+import hakandindis.skadi.data.source.common.viewBinding
 import hakandindis.skadi.databinding.FragmentProductListBinding
 
 @AndroidEntryPoint

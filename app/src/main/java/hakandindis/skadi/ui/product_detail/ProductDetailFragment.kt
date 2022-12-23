@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import hakandindis.skadi.R
-import hakandindis.skadi.common.viewBinding
+import hakandindis.skadi.data.source.common.viewBinding
 import hakandindis.skadi.databinding.FragmentProductDetailBinding
 
 class ProductDetailFragment : Fragment(R.layout.fragment_product_detail) {

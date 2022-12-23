@@ -1,4 +1,4 @@
-package hakandindis.skadi.common
+package hakandindis.skadi.data.source.common
 
 object ProductApiConstants {
     const val BASE_URL: String = "https://dummyjson.com/"
